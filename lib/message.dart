@@ -12,7 +12,7 @@ class Message {
   });
 
   factory Message.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    DocumentSnapshot<Map<String, dynamic>> snapshot
   ) {
     final data = snapshot.data();
     return Message(

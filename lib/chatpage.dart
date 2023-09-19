@@ -22,11 +22,11 @@ class ChatPage extends StatelessWidget {
                 await auth.signInAnonymously();
               }
             },
-            child: Text('Log In Or Out'),
+            child: const Text('Log In Or Out'),
           ),
         ],
       ),
-      body: ChatView(),
+      body: const ChatView(),
     );
   }
 }
@@ -38,38 +38,37 @@ class ChatView extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context,snapshot) {
+      builder: (context, snapshot) {
         return Column(
           children: [
             Text('User id: ${snapshot.data?.uid}'),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                   stream: messagesQuery.snapshots(),
-                  builder: (context, messagesSnapshot) {
-                    if (messagesSnapshot.connectionState ==
-                        ConnectionState.waiting) {
+                  builder: (context, messageSnapshot) {
+                    if (messageSnapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     }
-
-                 
-                      return ListView.builder(
-                          reverse: true,
-                          itemCount: messagesSnapshot.data!.size,
-                          itemBuilder: (BuildContext context, int idx) {
-                             final message =
-                          messagesSnapshot.data!.docs[idx].data() as Message;
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ChatBubble(text: message.message),
-                      );
-                          });
+                    return ListView.builder(
+                        reverse: true,
+                        itemCount: messageSnapshot.data!.size,
+                        itemBuilder: (BuildContext context, int idx) {
+                         
+                          final message =
+ Message.fromFirestore(messageSnapshot.data!.docs[idx] as DocumentSnapshot<Map<String, dynamic>>);
+                          print('hello'  '$message');
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ChatBubble(text: message.message),
+                          );
+                        });
                   }),
             ),
             ChatTextInput(
               onSend: (message) {
                 FirebaseFirestore.instance.collection('messages').add(
                       Message(
-                        uid:snapshot.data!.uid,
+                        uid: snapshot.data!.uid,
                         message: message,
                       ).toFirestore(),
                     );
