@@ -12,6 +12,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Fluteristas Chat App'),
         actions: [
           ElevatedButton(
             onPressed: () async {
@@ -44,25 +45,27 @@ class ChatView extends StatelessWidget {
             Text('User id: ${snapshot.data?.uid}'),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                  stream: messagesQuery.snapshots(),
-                  builder: (context, messageSnapshot) {
-                    if (messageSnapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    }
-                    return ListView.builder(
-                        reverse: true,
-                        itemCount: messageSnapshot.data!.size,
-                        itemBuilder: (BuildContext context, int idx) {
-                         
-                          final message =
- Message.fromFirestore(messageSnapshot.data!.docs[idx] as DocumentSnapshot<Map<String, dynamic>>);
-                          print('hello'  '$message');
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ChatBubble(text: message.message),
-                          );
-                        });
-                  }),
+                stream: messagesQuery.snapshots(),
+                builder: (context, messageSnapshot) {
+                  if (messageSnapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  return ListView.builder(
+                    reverse: true,
+                    itemCount: messageSnapshot.data!.size,
+                    itemBuilder: (BuildContext context, int idx) {
+                      final message = Message.fromFirestore(messageSnapshot
+                          .data!
+                          .docs[idx] as DocumentSnapshot<Map<String, dynamic>>);
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ChatBubble(text: message.message),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
             ChatTextInput(
               onSend: (message) {

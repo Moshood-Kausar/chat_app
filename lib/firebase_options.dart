@@ -21,7 +21,10 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -49,16 +52,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '492784035117',
     projectId: 'chat-example-3d1d6',
     authDomain: 'chat-example-3d1d6.firebaseapp.com',
+    databaseURL: 'https://chat-example-3d1d6-default-rtdb.firebaseio.com',
     storageBucket: 'chat-example-3d1d6.appspot.com',
     measurementId: 'G-3ZWHGQT5ZN',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAfBr4IMiaG4mPgx4DvGfuVqTszROfU88A',
-    appId: '1:492784035117:android:a19ef5d3ccd90b9e6e1fa4',
-    messagingSenderId: '492784035117',
-    projectId: 'chat-example-3d1d6',
-    storageBucket: 'chat-example-3d1d6.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -66,6 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:492784035117:ios:4d1c31dc54d2a5496e1fa4',
     messagingSenderId: '492784035117',
     projectId: 'chat-example-3d1d6',
+    databaseURL: 'https://chat-example-3d1d6-default-rtdb.firebaseio.com',
     storageBucket: 'chat-example-3d1d6.appspot.com',
     iosBundleId: 'com.example.chatTest',
   );
@@ -75,6 +72,7 @@ class DefaultFirebaseOptions {
     appId: '1:492784035117:ios:5f6933268263c79f6e1fa4',
     messagingSenderId: '492784035117',
     projectId: 'chat-example-3d1d6',
+    databaseURL: 'https://chat-example-3d1d6-default-rtdb.firebaseio.com',
     storageBucket: 'chat-example-3d1d6.appspot.com',
     iosBundleId: 'com.example.chatTest.RunnerTests',
   );
