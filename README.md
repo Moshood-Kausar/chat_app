@@ -61,6 +61,11 @@ The application utilizes Firebase for backend services. To configure:
 
 For a complete list, refer to `pubspec.yaml`.
 
+## Screenshot
+
+![Alt text]([image_path_or_URL](https://drive.google.com/file/d/1y7e2tOxs9qVP6_6UC31aF-BTh7veivW5/view?usp=sharing
+))
+
 ## Contributing
 
 Contributions are welcome! Please follow these steps:
